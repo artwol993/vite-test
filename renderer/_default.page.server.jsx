@@ -1,24 +1,25 @@
-import ReactDOMServer from "react-dom/server";
-import React from "react";
-import { escapeInject, dangerouslySkipEscape } from "vite-plugin-ssr";
+import ReactDOMServer from 'react-dom/server'
+import React from 'react'
+import { escapeInject, dangerouslySkipEscape } from 'vite-plugin-ssr'
 
-export { render };
+export { render }
+export { passToClient }
 
-async function render(pageContext) {
-  const { Page, pageProps } = pageContext;
-  const viewHtml = ReactDOMServer.renderToString(
-    <Page {...pageProps} />
-  );
+// See https://vite-plugin-ssr.com/data-fetching
+const passToClient = ['pageProps']
 
-  const title = "Vite SSR";
+function render(pageContext) {
+  const { Page, pageProps } = pageContext
+  const pageHtml = ReactDOMServer.renderToString(
+
+    <Page {...pageProps} />,
+
+  )
 
   return escapeInject`<!DOCTYPE html>
     <html>
-      <head>
-        <title>${title}</title>
-      </head>
       <body>
-        <div id="page-view">${dangerouslySkipEscape(viewHtml)}</div>
+        <div id="page-view">${dangerouslySkipEscape(pageHtml)}</div>
       </body>
-    </html>`;
+    </html>`
 }
