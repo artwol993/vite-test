@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
-    "dev-ssr": "npm run server",
+    "dev-ssr": "npm run server --host",
     "build": "vite build",
     "build-ssr": "vite build && vite build --ssr",
     "preview": "vite preview --host",

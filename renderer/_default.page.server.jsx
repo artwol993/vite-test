@@ -1,6 +1,7 @@
 import ReactDOMServer from 'react-dom/server'
 import React from 'react'
 import { escapeInject, dangerouslySkipEscape } from 'vite-plugin-ssr'
+import { PageLayout } from './PageLayout'
 
 export { render }
 export { passToClient }
@@ -11,9 +12,9 @@ const passToClient = ['pageProps']
 function render(pageContext) {
   const { Page, pageProps } = pageContext
   const pageHtml = ReactDOMServer.renderToString(
-
-    <Page {...pageProps} />,
-
+    <PageLayout>
+      <Page {...pageProps} />
+    </PageLayout>,
   )
 
   return escapeInject`<!DOCTYPE html>
